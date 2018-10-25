@@ -3,7 +3,6 @@
 	<name>jbrcap-aws</name>
 	<comment></comment>
 	<projects>
-		<project>processa-venda</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

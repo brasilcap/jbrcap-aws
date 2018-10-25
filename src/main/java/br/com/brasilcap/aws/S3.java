@@ -8,8 +8,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
-import org.apache.commons.codec.digest.DigestUtils;
-
 import br.com.brasilcap.aws.exception.BrcapAWSException;
 
 import com.amazonaws.AmazonServiceException;
@@ -81,7 +79,6 @@ public class S3 {
 		try {
 		
 			ObjectMetadata meta = new ObjectMetadata();
-			meta.setContentMD5(new String(com.amazonaws.util.Base64.encode(DigestUtils.md5(conteudo))));
 			meta.setContentLength(conteudo.length());
 			InputStream stream = new ByteArrayInputStream(conteudo.getBytes(StandardCharsets.UTF_8));
 			
