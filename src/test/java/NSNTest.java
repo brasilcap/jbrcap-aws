@@ -1,4 +1,3 @@
-import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -18,10 +17,7 @@ public class NSNTest {
 			
 			SNS sns = new SNS(Regions.SA_EAST_1);
 			
-			JSONObject jsonObject = new JSONObject();
-			jsonObject.put("id", "hello");
-			
-			String retorno = sns.sendMessage(topicArn, jsonObject, "testando");
+			String retorno = sns.sendMessage(topicArn, "{\"teste\" : \"hello\"}", "testando");
 			
 			Assert.assertEquals(retorno, Constants.SNS_NOTIFICATION_RETURN_MESSAGE);
 			

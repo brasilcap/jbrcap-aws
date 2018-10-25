@@ -28,14 +28,16 @@ public class SNS {
 	}
 	
 	@SuppressWarnings("deprecation")
-	public String sendMessage(String topicArn, JSONObject payload, String subject) throws BrcapAWSException{
+	public String sendMessage(String topicArn, String payload, String subject) throws BrcapAWSException{
 		
 		AmazonSNSClient snsClient = new AmazonSNSClient();
 		long messageId = getRandom();
 		
-		payload.put(Constants.QUEUE_MONITOR_ID, messageId);
+		JSONObject jsonObject = new JSONObject(payload);
 		
-		String playloadString = payload.toString();
+		jsonObject.put(Constants.QUEUE_MONITOR_ID, messageId);
+		
+		String playloadString = jsonObject.toString();
 		PublishRequest publishRequest = new PublishRequest();
 		publishRequest.setMessage(playloadString);
 		publishRequest.setMessageStructure(Constants.MESSAGE_STRUCTURE_SNS);
