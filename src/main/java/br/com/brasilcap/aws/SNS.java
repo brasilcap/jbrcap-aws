@@ -62,7 +62,7 @@ public class SNS {
 			
 			dynamo.put(itemSns, Constants.MONITORING_QUEUE_DYNAMO_DB);
 			
-			S3 s3 = new S3();
+			S3 s3 = new S3(region);
 			s3.put(Constants.BUCKET_QUEUE_MONITOR, String.valueOf(messageId), payload.toString());
 			
 			ListSubscriptionsByTopicResult listSubscriptionsByTopicResult = snsClient.listSubscriptionsByTopic(topicArn);

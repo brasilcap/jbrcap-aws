@@ -15,6 +15,7 @@ import br.com.brasilcap.aws.exception.BrcapAWSException;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.SdkClientException;
 import com.amazonaws.auth.profile.ProfileCredentialsProvider;
+import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.GetObjectRequest;
@@ -25,13 +26,17 @@ import com.amazonaws.services.s3.model.S3Object;
 public class S3 {
 	
 	final AmazonS3 s3 = AmazonS3ClientBuilder.defaultClient();
-	String clientRegion;
+	Regions region;
+	
+	public S3(Regions region){
+		this.region = region;
+	}
 	
 	public BufferedReader get(String bucketName, String key ) throws BrcapAWSException, IOException{
         S3Object fullObject = null;
         try {
             AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
-                    .withRegion(clientRegion)
+                    .withRegion(region)
                     .withCredentials(new ProfileCredentialsProvider())
                     .build();
 
@@ -51,6 +56,13 @@ public class S3 {
                 fullObject.close();
             }
         }
+	}
+	
+	public String getObjectAsString(String bucket, String key){
+		String object = s3.getObjectAsString(bucket, key);
+
+		return object;
+
 	}
 	
 	public void putObject(String bucketName, String keyName, String filePath) throws BrcapAWSException{
