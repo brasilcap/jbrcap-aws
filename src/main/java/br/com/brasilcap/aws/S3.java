@@ -23,23 +23,22 @@ import com.amazonaws.services.s3.model.S3Object;
 	
 public class S3 {
 	
-	final AmazonS3 s3 = AmazonS3ClientBuilder.defaultClient();
+	final AmazonS3 s3;
 	Regions region;
 	
 	public S3(Regions region){
 		this.region = region;
+		s3 = AmazonS3ClientBuilder.standard()
+                .withRegion(region)
+                .withCredentials(new ProfileCredentialsProvider())
+                .build();
 	}
 	
 	public BufferedReader get(String bucketName, String key ) throws BrcapAWSException, IOException{
         S3Object fullObject = null;
         try {
-            AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
-                    .withRegion(region)
-                    .withCredentials(new ProfileCredentialsProvider())
-                    .build();
-
-            
-            fullObject = s3Client.getObject(new GetObjectRequest(bucketName, key));
+        	
+            fullObject = s3.getObject(new GetObjectRequest(bucketName, key));
             
             return new BufferedReader(new InputStreamReader(fullObject.getObjectContent()));
         }
