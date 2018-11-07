@@ -12,7 +12,7 @@ import br.com.brasilcap.aws.exception.BrcapAWSException;
 
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.SdkClientException;
-import com.amazonaws.auth.profile.ProfileCredentialsProvider;
+import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
@@ -30,7 +30,7 @@ public class S3 {
 		this.region = region;
 		s3 = AmazonS3ClientBuilder.standard()
                 .withRegion(region)
-                .withCredentials(new ProfileCredentialsProvider())
+                .withCredentials(DefaultAWSCredentialsProviderChain.getInstance())
                 .build();
 	}
 	
