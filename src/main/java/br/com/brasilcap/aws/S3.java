@@ -87,4 +87,16 @@ public class S3 {
 			throw new BrcapAWSException(e);
 		}
 	}
+	
+	public S3Object getObject(String bucketName, String key) throws BrcapAWSException, IOException{
+        try {
+        	return s3.getObject(bucketName, key);
+        }
+        catch(AmazonServiceException e) {
+        	throw new BrcapAWSException(e);
+        }
+        catch(SdkClientException e) {
+        	throw new BrcapAWSException(e);
+        }
+	}
 }
